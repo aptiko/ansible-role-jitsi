@@ -465,6 +465,12 @@ jitsi_jvb_container_labels_traefik_entrypoints: "{{ jitsi_container_labels_traef
 jitsi_jvb_container_labels_traefik_tls: "{{ jitsi_jvb_container_labels_traefik_entrypoints != 'web' }}"
 jitsi_jvb_container_labels_traefik_tls_certResolver: default  # noqa var-naming
 
+# jitsi_additional_jvbs is a list like this:
+# jitsi_additional_jvbs:
+#   - jitsi_jvb_server_id: 2
+#     
+jitsi_additional_jvbs: []
+
 # Controls which additional headers to attach to all HTTP requests.
 # To add your own custom request headers, use `jitsi_jvb_container_labels_traefik_additional_response_headers_custom`
 jitsi_jvb_container_labels_traefik_additional_request_headers: "{{ jitsi_jvb_container_labels_traefik_additional_request_headers_auto | combine(jitsi_jvb_container_labels_traefik_additional_request_headers_custom) }}"

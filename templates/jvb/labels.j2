@@ -40,6 +40,22 @@ traefik.http.routers.{{ jitsi_identifier }}-jvb.tls={{ jitsi_jvb_container_label
 traefik.http.routers.{{ jitsi_identifier }}-jvb.tls.certResolver={{ jitsi_jvb_container_labels_traefik_tls_certResolver }}
 {% endif %}
 
+{% for additional_jvb in jitsi_additional_jvbs %}
+traefik.http.routers.{{ jitsi_identifier }}-{{ additional_jvb.jitsi_jvb_server_id }}.rule="Host(`{{ jitsi_jvb_container_labels_traefik_hostname }}`) && PathPrefix(`{{ jitsi_jvb_container_labels_traefik_path_prefix }}{{ '' if jitsi_container_labels_traefik_path_prefix == '/' else '/' }}colibri-ws/{{ additional_jvb.jitsi_jvb_server_id }}/`)"
+{% if jitsi_jvb_container_labels_traefik_priority | int > 0 %}
+traefik.http.routers.{{ jitsi_identifier }}-jvb.priority={{ jitsi_jvb_container_labels_traefik_priority }}
+{% endif %}
+traefik.http.routers.{{ jitsi_identifier }}-{{ additional_jvb.jitsi_jvb_server_id }}.service={{ jitsi_identifier }}-{{ additional_jvb.jitsi_jvb_server_id }}
+{% if middlewares | length > 0 %}
+traefik.http.routers.{{ jitsi_identifier }}-{{ additional_jvb.jitsi_jvb_server_id }}.middlewares={{ middlewares | join(',') }}
+{% endif %}
+traefik.http.routers.{{ jitsi_identifier }}-{{ additional_jvb.jitsi_jvb_server_id }}.entrypoints={{ jitsi_jvb_container_labels_traefik_entrypoints }}
+traefik.http.routers.{{ jitsi_identifier }}-{{ additional_jvb.jitsi_jvb_server_id }}.tls={{ jitsi_jvb_container_labels_traefik_tls | to_json }}
+{% if jitsi_jvb_container_labels_traefik_tls %}
+traefik.http.routers.{{ jitsi_identifier }}-{{ additional_jvb.jitsi_jvb_server_id }}.tls.certResolver={{ jitsi_jvb_container_labels_traefik_tls_certResolver }}
+{% endif %}
+{% endfor %}
+
 traefik.http.services.{{ jitsi_identifier }}-jvb.loadbalancer.server.port=9090
 {% endif %}
 
