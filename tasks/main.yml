@@ -69,6 +69,25 @@
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/jvb_uninstall.yml"
 
 - tags:
+    - setup-all
+    - setup-jitsi
+    - setup-additional-jitsi-jibri
+    - install-all
+    - install-jitsi
+    - install-additional-jitsi-jibri
+  block:
+    - when: jitsi_jibri_enabled | bool
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/jibri_install.yml"
+
+- tags:
+    - setup-all
+    - setup-jitsi
+    - setup-additional-jitsi-jibri
+  block:
+    - when: not jitsi_jibri_enabled | bool
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/jibri_uninstall.yml"
+
+- tags:
     - self-check
   block:
     - when: jitsi_enable_auth | bool and jitsi_auth_type == 'matrix'

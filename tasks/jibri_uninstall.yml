@@ -1,0 +1,25 @@
+---
+
+- name: Check existence of jitsi-jibri service
+  ansible.builtin.stat:
+    path: "{{ devture_systemd_docker_base_systemd_path }}/{{ jitsi_identifier }}-jibri.service"
+  register: jitsi_jibri_service_stat
+
+- when: jitsi_jibri_service_stat.stat.exists | bool
+  block:
+    - name: Ensure jitsi-jibri systemd service is stopped
+      ansible.builtin.service:
+        name: "{{ jitsi_identifier }}-jibri"
+        state: stopped
+        enabled: false
+        daemon_reload: true
+
+    - name: Ensure jitsi-jibri systemd service doesn't exist
+      ansible.builtin.file:
+        path: "{{ devture_systemd_docker_base_systemd_path }}/{{ jitsi_identifier }}-jibri.service"
+        state: absent
+
+    - name: Ensure jitsi-jibri paths doesn't exist
+      ansible.builtin.file:
+        path: "{{ jitsi_jibri_base_path }}"
+        state: absent

@@ -102,6 +102,14 @@ jitsi_xmpp_modules: ''
 
 jitsi_recorder_domain: recorder.meet.jitsi
 
+jitsi_jibri_enabled: false
+jitsi_jibri_container_image_registry_prefix: docker.io/
+jitsi_jibri_container_image: "{{ jitsi_jibri_container_image_registry_prefix }}jitsi/jibri:{{ jitsi_container_image_tag }}"
+jitsi_jibri_container_image_force_pull: "{{ jitsi_jibri_container_image.endswith(':latest') }}"
+jitsi_jibri_systemd_required_services_list: ['docker.service']
+jitsi_jibri_container_extra_arguments: []
+jitsi_jibri_base_path: "{{ jitsi_base_path }}/jibri"
+jitsi_jibri_config_path: "{{ jitsi_jibri_base_path }}/config"
 jitsi_jibri_brewery_muc: jibribrewery
 jitsi_jibri_pending_timeout: 90
 jitsi_jibri_xmpp_user: jibri
