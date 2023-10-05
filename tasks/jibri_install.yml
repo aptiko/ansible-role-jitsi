@@ -39,3 +39,9 @@
     src: "{{ role_path }}/templates/jibri/jibri.service.j2"
     dest: "{{ devture_systemd_docker_base_systemd_path }}/{{ jitsi_identifier }}-jibri.service"
     mode: "0644"
+
+- name: Create /tmp/.X11-unix directory
+  file:
+    state: directory
+    path: /tmp/.X11-unix
+    mode: 01777
