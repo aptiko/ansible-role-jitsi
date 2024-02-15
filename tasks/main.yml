@@ -76,7 +76,7 @@
     - install-jitsi
     - install-additional-jitsi-jibri
   block:
-    - when: jitsi_jibri_enabled | bool
+    - when: jitsi_enable_recording | bool
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/jibri_install.yml"
 
 - tags:
@@ -84,7 +84,7 @@
     - setup-jitsi
     - setup-additional-jitsi-jibri
   block:
-    - when: not jitsi_jibri_enabled | bool
+    - when: not jitsi_enable_recording | bool
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/jibri_uninstall.yml"
 
 - tags:

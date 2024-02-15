@@ -28,6 +28,8 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
 			{% endfor %}
 			{{ jitsi_jibri_container_image }}
 
+ExecStartPre=/usr/bin/env docker network connect traefik matrix-jitsi-jibri
+
 ExecStart={{ devture_systemd_docker_base_host_command_docker }} start --attach {{ jitsi_identifier }}-jibri
 
 ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} kill {{ jitsi_identifier }}-jibri 2>/dev/null || true'

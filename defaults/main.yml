@@ -102,7 +102,6 @@ jitsi_xmpp_modules: ''
 
 jitsi_recorder_domain: recorder.meet.jitsi
 
-jitsi_jibri_enabled: false
 jitsi_jibri_container_image_registry_prefix: docker.io/
 jitsi_jibri_container_image: "{{ jitsi_jibri_container_image_registry_prefix }}jitsi/jibri:{{ jitsi_container_image_tag }}"
 jitsi_jibri_container_image_force_pull: "{{ jitsi_jibri_container_image.endswith(':latest') }}"

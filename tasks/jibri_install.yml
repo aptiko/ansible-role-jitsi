@@ -1,4 +1,13 @@
 ---
+- name: Install linux-modules-extra
+  apt:
+    name: linux-modules-extra-{{ ansible_kernel }}
+  when: ansible_distribution == "Ubuntu"
+
+- name: Load kernel module snd-aloop
+  community.general.modprobe:
+    name: snd-aloop
+    persistent: present
 
 - name: Ensure jitsi-jibri path exists
   ansible.builtin.file:
